@@ -7,7 +7,7 @@ try:
     conn = MySQLdb.connect(
         host='127.0.0.1',
         user='root',
-        passwd='Lacerda@22',
+        passwd='senha-do-bd',
     )
 except MySQLdb.MySQLError as err:
     print(f"Erro na conexão: {err}")
