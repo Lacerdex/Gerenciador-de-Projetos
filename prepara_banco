@@ -1,0 +1,105 @@
+import MySQLdb
+from flask_bcrypt import generate_password_hash
+
+print("Conectando...")
+
+try:
+    conn = MySQLdb.connect(
+        host='127.0.0.1',
+        user='root',
+        passwd='Lacerda@22',
+    )
+except MySQLdb.MySQLError as err:
+    print(f"Erro na conexão: {err}")
+    exit()
+
+cursor = conn.cursor()
+
+# Criar banco de dados
+cursor.execute("DROP DATABASE IF EXISTS `ache`;")
+cursor.execute("CREATE DATABASE `ache` CHARACTER SET utf8 COLLATE utf8_bin;")
+cursor.execute("USE `ache`;")
+
+# criando tabelas
+TABLES = {}
+
+TABLES['Tarefas'] = ('''
+      CREATE TABLE `tarefas` (
+      `id` int(10) NOT NULL AUTO_INCREMENT,
+      `nomeArquivo` varchar(255) NOT NULL,
+      `numero` varchar(10) NOT NULL,
+      `classificacao` varchar(100) NOT NULL,
+      `categoria` varchar(100) NOT NULL,
+      `fase` varchar(100) NOT NULL,
+      `condicao` varchar(100) NOT NULL,
+      `nome` varchar(255) NOT NULL,
+      `duracao` varchar(100) NOT NULL,
+      `comoFazer` varchar(500) NOT NULL,
+      `docRef` varchar(225) NOT NULL,
+      `porcConcluida` INT NOT NULL,
+      PRIMARY KEY (`id`)
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+''')
+
+TABLES['Usuarios'] = ('''
+      CREATE TABLE `usuarios` (
+      `id` int(10) NOT NULL AUTO_INCREMENT,
+      `nome` varchar(20) NOT NULL,
+      `email` varchar(50) NOT NULL,
+      `senha` varchar(100) NOT NULL,
+      PRIMARY KEY (`id`)
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+''')
+
+for nome_tabela in TABLES:
+    sql = TABLES[nome_tabela]
+    try:
+        print(f"Criando tabela {nome_tabela}: ", end="")
+        cursor.execute(sql)
+        print("OK")
+    except MySQLdb.MySQLError as err:
+        print(f"Erro ao criar tabela: {err}")
+
+# inserindo usuários
+usuario_sql = 'INSERT INTO usuarios (nome, email, senha) VALUES (%s, %s, %s)'
+usuarios = [
+    ("Administrador", "teste1@gmail.com", generate_password_hash("010203").decode('utf-8')),
+]
+cursor.executemany(usuario_sql, usuarios)
+
+cursor.execute('SELECT * FROM usuarios')
+print(' -------------  Usuários:  -------------')
+for user in cursor.fetchall():
+    print(f'ID: {user[0]}\tNome: {user[1]}')
+
+# inserindo tarefas
+tarefas_sql = '''
+INSERT INTO tarefas (numero, nomeArquivo, classificacao, categoria, fase, condicao, nome, duracao, comoFazer, docRef, porcConcluida)
+VALUES (%s,%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+'''
+tarefas = [
+    ('120', 'Lista_de_projeto_teste', 'Embalagem Primaria', 'Blisters', '1. Escopo & Briefing', 'C',
+     'Definir especificações de barreira e proteção dos blisters',
+     '5 dias', 'Texto.120', 'Doc.120', '100'),
+]
+cursor.executemany(tarefas_sql, tarefas)
+
+cursor.execute('SELECT * FROM tarefas')
+print(' -------------  Tarefas:  -------------')
+for tarefa in cursor.fetchall():
+    print(f"\t  ID: {tarefa[0]}\n \
+          Numero: {tarefa[1]}\n \
+          Nome Do Arquivo: {tarefa[2]}\n \
+          Classificacao: {tarefa[3]}\n \
+          Categoria: {tarefa[4]}\n \
+          Fase: {tarefa[5]}\n \
+          Condicao: {tarefa[6]}\n \
+          Nome: {tarefa[7]}\n \
+          Duracao: {tarefa[8]}\n \
+          Como fazer: {tarefa[9]}\n \
+          Doc Referencia: {tarefa[10]}\n \
+          % Concluida: {tarefa[11]}")
+
+conn.commit()
+cursor.close()
+conn.close()
