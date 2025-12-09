@@ -23,7 +23,7 @@ O endpoint principal (`/enviar`) é o núcleo do sistema, realizando uma complex
 Fluxo de Requisição (Chatbot)
 
 1. **Recepção de Dados:**
-   * Recebe a pergunta do usuário e uma lista de arquivos (lista_arquivos) a serem analisados.
+   * Recebe a pergunta do usuário e uma lista de arquivos (`lista_arquivos`) a serem analisados.
 
 2. **Tratamento de Dados** (`Pandas`):
    * Lê e padroniza as colunas de até **2 planilhas.**
