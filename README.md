@@ -22,7 +22,8 @@ Centralizar a consulta e a análise de grandes volumes de dados de projetos (com
 O endpoint principal (`/enviar`) é o núcleo do sistema, realizando uma complexa sequência de operações a cada mensagem do usuário.
 Fluxo de Requisição (Chatbot)
 
-1. **Recepção de Dados:** Recebe a pergunta do usuário e uma lista de arquivos (lista_arquivos) a serem analisados.
+1. **Recepção de Dados:**
+   * Recebe a pergunta do usuário e uma lista de arquivos (lista_arquivos) a serem analisados.
 
 2. **Tratamento de Dados** (`Pandas`):
    * Lê e padroniza as colunas de até **2 planilhas.**
@@ -34,7 +35,8 @@ Fluxo de Requisição (Chatbot)
    * Envia esse histórico para uma **IA Secundária** (`resumir_conversa_pela_segIA`) para gerar um resumo conciso.
    * O resumo é **salvo** (`salvar_resumo`) e usado como contexto de longo prazo para a IA principal.
 
-4. **Geração da Resposta (IA Primária):** A IA principal (`perguntar_para_ia`) recebe a **pergunta**, os **dados tabulares filtrados** e o **resumo do contexto.**
+4. **Geração da Resposta (IA Primária):**
+   * A IA principal (`perguntar_para_ia`) recebe a **pergunta**, os **dados tabulares filtrados** e o **resumo do contexto.**
 
 5. **Recuperação de Documentos (RAG):**
    * Verifica se a resposta da IA contém o marcador `#DOCUMENTO_SOLICITADO:`.
