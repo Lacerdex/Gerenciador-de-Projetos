@@ -1,6 +1,6 @@
 # 🤖 Project Manager AI Chatbot
 
-Este projeto é um sistema de gerenciamento de tarefas e projetos potencializado por um Chatbot de Inteligência Artificial. Ele é capaz de ler e analisar dados de planilhas (como Excel/CSV), cruzar informações com documentos de referência (PDFs) e manter o contexto da conversa, tudo em tempo real.
+Este projeto é um sistema de gerenciamento de tarefas e projetos potencializado por um **Chatbot de Inteligência Artificial**. Ele é capaz de ler e analisar dados de planilhas (como Excel/CSV), cruzar informações com documentos de referência (PDFs) e manter o contexto da conversa, tudo em tempo real.
 
 # 🎯 Objetivo Principal
 
@@ -9,17 +9,17 @@ Centralizar a consulta e a análise de grandes volumes de dados de projetos (com
 # 🚀 Tecnologias Utilizadas
 | Categoria |	Tecnologia |	Função no Projeto |
 | :--- | :--- | :--- |
-| Backend |	Flask |	Micro-framework Python que hospeda a API REST. |
-| Análise de Dados |	Pandas |	Leitura, tratamento, concatenação (pd.concat) e filtragem dos dados de planilhas (.xlsx, .csv). |
-| IA/LLM |	Chatbots (IA Primária e Secundária) |	Geração de respostas, análise de dados e resumo de histórico de conversas. |
-| Banco de Dados |	MySQL |	Armazenamento de dados persistentes (Usuários e Tarefas). |
-| Recuperação de Info |	Lógica de Busca em PDF |	Função `cruzarDadosPDF` para encontrar trechos de referência em documentos. |
-| Segurança | Flask-Bcrypt |	Hashing de senhas de usuários. |
-| Autenticação |	Flask-CSRF |	Proteção contra ataques CSRF na API. |
+| **Backend** |	**Flask** |	Micro-framework Python que hospeda a API REST. |
+| **Análise de Dados** |	**Pandas** |	Leitura, tratamento, concatenação (`pd.concat`) e filtragem dos dados de planilhas (`.xlsx, .csv`). |
+| **IA/LLM** |	**Chatbots (IA Primária e Secundária)** |	Geração de respostas, análise de dados e **resumo de histórico de conversas.** |
+| **Banco de Dados** |	**MySQL** |	Armazenamento de dados persistentes (Usuários e Tarefas). |
+| **Recuperação de Info** |	**Lógica de Busca em PDF** |	Função `cruzarDadosPDF` para encontrar trechos de referência em documentos. |
+| **Segurança** | **Flask-Bcrypt** |	Hashing de senhas de usuários. |
+| **Autenticação** |	**Flask-CSRF** |	Proteção contra ataques CSRF na API. |
 
 # 💾 Arquitetura do Processamento de Mensagens
 
-O endpoint principal (/enviar) é o núcleo do sistema, realizando uma complexa sequência de operações a cada mensagem do usuário.
+O endpoint principal (`/enviar`) é o núcleo do sistema, realizando uma complexa sequência de operações a cada mensagem do usuário.
 Fluxo de Requisição (Chatbot)
 
 1. **Recepção de Dados:** Recebe a pergunta do usuário e uma lista de arquivos (lista_arquivos) a serem analisados.
